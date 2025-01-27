@@ -1,2 +1,17 @@
-# formation-ansible-solutions
-Solutions aux exercices de la formation Ansible
+# Formation Ansible
+
+Solutions aux exercices :
+
+- [Installation](solutions/installation.md)
+
+- [Authentification](solutions/authentification.md)
+
+- [Configuration de base](solutions/configuration.md)
+
+- [Idempotence](solutions/idempotence.md)
+
+- [Un serveur web simple](solutions/apache.md)
+
+- [Handler](solutions/handler.md)
+
+- [Variables](solutions/variables.md)
