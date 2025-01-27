@@ -15,3 +15,5 @@ Solutions aux exercices :
 - [Handler](solutions/handler.md)
 
 - [Variables](solutions/variables.md)
+
+- [Variables enregistrées](solutions/registered-variables.md)
