@@ -17,3 +17,5 @@ Solutions aux exercices :
 - [Variables](solutions/variables.md)
 
 - [Variables enregistrées](solutions/registered-variables.md)
+
+- [Facts et variables implicites](solutions/facts.md)
