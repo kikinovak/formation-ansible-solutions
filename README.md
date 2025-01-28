@@ -19,3 +19,5 @@ Solutions aux exercices :
 - [Variables enregistrées](solutions/registered-variables.md)
 
 - [Facts et variables implicites](solutions/facts.md)
+
+- [Cibles hétérogènes](solutions/targets.md)
