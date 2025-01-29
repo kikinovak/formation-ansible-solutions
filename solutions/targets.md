@@ -80,18 +80,17 @@ logdir /var/log/chrony
         name: chrony
       when: ansible_distribution == "openSUSE Leap"
 
-    - name: Start Chrony & enable it on boot
+    - name: Start Chrony service & enable it on boot
       service:
         name: chronyd
         state: started
         enabled: true
 
-    - name: Configure Chrony on Debian/Ubuntu
+    - name: Configure Chrony
       copy:
         dest: /etc/chrony/chrony.conf
-        mode: preserve
         content: |
-          # chrony.conf
+          # /etc/chrony/chrony.conf
           server 0.fr.pool.ntp.org iburst
           server 1.fr.pool.ntp.org iburst
           server 2.fr.pool.ntp.org iburst
@@ -101,14 +100,13 @@ logdir /var/log/chrony
           rtcsync
           logdir /var/log/chrony
       when: ansible_os_family == "Debian"
-      notify: Restart Chrony
+      notify: Restart Chrony service
 
-    - name: Configure Chrony on Rocky and SUSE
+    - name: Configure Chrony
       copy:
         dest: /etc/chrony.conf
-        mode: preserve
         content: |
-          # chrony.conf
+          # /etc/chrony.conf
           server 0.fr.pool.ntp.org iburst
           server 1.fr.pool.ntp.org iburst
           server 2.fr.pool.ntp.org iburst
@@ -118,11 +116,11 @@ logdir /var/log/chrony
           rtcsync
           logdir /var/log/chrony
       when: ansible_distribution in ["Rocky", "openSUSE Leap"]
-      notify: Restart Chrony
+      notify: Restart Chrony service
 
   handlers:
 
-    - name: Restart Chrony
+    - name: Restart Chrony service
       service:
         name: chronyd
         state: restarted
@@ -135,30 +133,25 @@ logdir /var/log/chrony
   de gestion de paquets générique `package`.
 
 ```
----  # chrony2.yml
+---  # chrony-02.yml
 
 - hosts: all
 
-  vars:
-    chrony:
-      Debian:
-        chrony_package: chrony
-        chrony_service: chronyd
-        chrony_confdir: /etc/chrony
-      Ubuntu:
-        chrony_package: chrony
-        chrony_service: chronyd
-        chrony_confdir: /etc/chrony
-      Rocky:
-        chrony_package: chrony
-        chrony_service: chronyd
-        chrony_confdir: /etc
-      openSUSE Leap:
-        chrony_package: chrony
-        chrony_service: chronyd
-        chrony_confdir: /etc
-
   tasks:
+
+    - name: Parameters for Debian/Ubuntu
+      set_fact:
+        chrony_package: chrony
+        chrony_service: chronyd
+        chrony_confdir: /etc/chrony
+      when: ansible_os_family == "Debian"
+
+    - name: Parameters for Rocky and SUSE
+      set_fact:
+        chrony_package: chrony
+        chrony_service: chronyd
+        chrony_confdir: /etc
+      when: ansible_distribution in ["Rocky", "openSUSE Leap"]
 
     - name: Update package information on Debian/Ubuntu
       apt:
@@ -168,18 +161,17 @@ logdir /var/log/chrony
 
     - name: Install Chrony
       package:
-        name: "{{chrony[ansible_distribution].chrony_package}}"
+        name: "{{chrony_package}}"
 
-    - name: Start Chrony & enable it on boot
+    - name: Start Chrony service & enable it on boot
       service:
-        name: "{{chrony[ansible_distribution].chrony_service}}"
+        name: "{{chrony_service}}"
         state: started
         enabled: true
 
     - name: Configure Chrony
       copy:
-        dest: "{{chrony[ansible_distribution].chrony_confdir}}/chrony.conf"
-        mode: preserve
+        dest: "{{chrony_confdir}}/chrony.conf"
         content: |
           # chrony.conf
           server 0.fr.pool.ntp.org iburst
@@ -190,13 +182,13 @@ logdir /var/log/chrony
           makestep 1.0 3
           rtcsync
           logdir /var/log/chrony
-      notify: Restart Chrony
+      notify: Restart Chrony service
 
   handlers:
 
-    - name: Restart Chrony
+    - name: Restart Chrony service
       service:
-        name: chronyd
+        name: "{{chrony_service}}"
         state: restarted
 
 ...
