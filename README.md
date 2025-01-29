@@ -21,3 +21,5 @@ Solutions aux exercices :
 - [Facts et variables implicites](solutions/facts.md)
 
 - [Cibles hétérogènes](solutions/targets.md)
+
+- [Jinja & Templates](solutions/templates.md)
