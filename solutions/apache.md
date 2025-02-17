@@ -4,15 +4,21 @@
 
 Placez-vous dans le répertoire du dixième atelier pratique :
 
+```
 $ cd ~/formation-ansible/atelier-10
+```
 
 Démarrez les VM :
 
+```
 $ vagrant up
+```
 
 Connectez-vous au Control Host :
 
+```
 $ vagrant ssh ansible
+```
 
 Rendez-vous dans le répertoire du projet :
 
