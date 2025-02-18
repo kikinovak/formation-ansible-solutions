@@ -33,9 +33,9 @@ Hosts* :
 
 - `pkg-info.yml` pour afficher le gestionnaire de paquets utilisé
 
+```
 ---  # pkg-info.yml
 
-```
 - hosts: all
 
   tasks:
@@ -51,9 +51,9 @@ Hosts* :
 
 - `python-info.yml` pour afficher la version de Python installée
 
+```
 ---  # python-info.yml
 
-```
 - hosts: all
 
   tasks:
